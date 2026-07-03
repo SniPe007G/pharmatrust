@@ -1,0 +1,322 @@
+/* ============================================
+   PharmaTrust - Complete CSS File
+   ============================================ */
+:root{
+    --primary-1: #667eea;
+    --primary-2: #764ba2;
+    --accent: #11998e;
+    --muted: #6c757d;
+    --card-radius: 12px;
+    --transition-fast: 180ms;
+    --transition: 300ms;
+}
+
+/* ---------- Global Styles ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding-bottom: 30px;
+}
+
+/* ---------- Flex Utilities ---------- */
+.flex-center { display:flex; align-items:center; justify-content:center; }
+.flex-between { display:flex; align-items:center; justify-content:space-between; }
+.col { display:flex; flex-direction:column; }
+.row-gap { display:flex; gap:1rem; flex-wrap:wrap; }
+.app-grid { display:flex; gap:1.5rem; align-items:flex-start; }
+.app-col { flex:1 1 0; }
+
+/* ---------- Micro-interactions & Animations ---------- */
+.fade-slide { opacity:0; transform: translateY(8px); transition: opacity var(--transition), transform var(--transition); }
+.fade-slide.visible { opacity:1; transform: translateY(0); }
+
+.stagger-parent > * { opacity:0; transform: translateY(8px); }
+.stagger-parent.visible > * { opacity:1; transform: translateY(0); transition: all var(--transition) ease; }
+
+@keyframes counterPop {
+    0% { transform: scale(0.95); opacity:0.6 }
+    60% { transform: scale(1.04); opacity:1 }
+    100% { transform: scale(1); opacity:1 }
+}
+.stat-value.animate { animation: counterPop 420ms ease; }
+
+@keyframes floatUp {
+    0% { transform: translateY(6px); opacity:0 }
+    100% { transform: translateY(0); opacity:1 }
+}
+.float-up { animation: floatUp 420ms ease both; }
+
+/* 3D tilt on hover for cards */
+.tilt-card { transform-style: preserve-3d; will-change: transform; transition: transform var(--transition-fast) ease; }
+.tilt-card:hover { transform: perspective(800px) rotateX(3deg) rotateY(-3deg) translateY(-6px); }
+
+/* ---------- Navigation Bar ---------- */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+    padding: 12px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand i {
+    margin-right: 10px;
+    font-size: 1.8rem;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    padding: 8px 16px !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.navbar .nav-link:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-1px);
+}
+
+.navbar .nav-link i {
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+
+/* ---------- Cards ---------- */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 25px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 2px solid #f0f2f5;
+    padding: 18px 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.card-header h5,
+.card-header h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.card-header i {
+    margin-right: 10px;
+    color: #667eea;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+/* ---------- Dashboard Stat Cards ---------- */
+.stat-card {
+    border-radius: 12px;
+    padding: 20px 25px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.stat-card .stat-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    opacity: 0.15;
+}
+
+.stat-card .stat-label {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.stat-card .stat-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+/* Gradient variants */
+.stat-card.bg-primary { background: linear-gradient(135deg,#667eea,#764ba2); }
+.stat-card.bg-success { background: linear-gradient(135deg,#11998e,#38ef7d); }
+.stat-card.bg-info { background: linear-gradient(135deg,#2196F3,#00BCD4); }
+.stat-card.bg-warning { background: linear-gradient(135deg,#f7971e,#ffd200); }
+.stat-card.bg-danger { background: linear-gradient(135deg,#e74c3c,#c0392b); }
+
+/* ---------- Tables ---------- */
+.table {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.table thead th {
+    background: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 12px 15px;
+}
+
+.table tbody td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* ---------- Badges ---------- */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
+.badge-success { background:#d4edda; color:#155724; }
+.badge-danger { background:#f8d7da; color:#721c24; }
+.badge-warning { background:#fff3cd; color:#856404; }
+.badge-info { background:#d1ecf1; color:#0c5460; }
+
+/* ---------- Buttons ---------- */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    border: none;
+}
+
+.btn-success { background: linear-gradient(135deg,#11998e,#38ef7d); border:none; }
+.btn-danger { background: linear-gradient(135deg,#e74c3c,#c0392b); border:none; }
+.btn-info { background: linear-gradient(135deg,#2196F3,#00BCD4); border:none; color:white; }
+
+.btn-info:hover { color: white; }
+
+/* ---------- Forms ---------- */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102,126,234,0.25);
+}
+
+/* ---------- Modals ---------- */
+.modal-content {
+    border-radius: 16px;
+    border: none;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color: white;
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+    border-radius: 10px;
+    border: none;
+    animation: fadeIn 0.3s ease;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Auth Pages ---------- */
+.auth-page {
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .card-body { padding: 15px; }
+    .stat-card .stat-value { font-size: 1.8rem; }
+}
+
+@media (max-width: 480px) {
+    .btn { font-size: 0.85rem; }
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c7cd;
+    border-radius: 4px;
+}
+
+/* Responsive root font sizing for better scaling */
+html { font-size: clamp(14px, 1.2vw, 16px); }
+
+/* Main container spanning full width, with inner centered container */
+.main-container { width:100%; background:transparent; }
+.main-container .container { padding-top: 1rem; padding-bottom: 2.5rem; }
+
+/* Responsive helpers for tables and cards */
+.table-responsive { overflow-x:auto; -webkit-overflow-scrolling: touch; }
+.responsive-card { display:flex; flex-direction:column; }
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+    .app-grid { flex-direction:column; }
+    .stat-card { padding: 16px; }
+    .stat-card .stat-icon { font-size: 3rem; right:10px; }
+}
