@@ -53,7 +53,7 @@ if (!isset($basePath)) {
 
         <!-- BRAND -->
         <a class="navbar-brand" href="<?= $basePath ?>/pages/dashboard.php">
-            <i class="fas fa-hospital-alt"></i> PharmaTrust
+            <img src="/pharmatrust/assets/images/pharmatrustlogo.jpeg" alt="PharmaTrust" style="height: 50px; width: auto; border-radius: 10px;">
         </a>
 
         <!-- TOGGLER -->
@@ -121,7 +121,7 @@ if (!isset($basePath)) {
                 <?php if (canViewActivities()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $basePath ?>/pages/dashboard.php#activityLog">
-                        <i class="fas fa-list"></i> Activity Log
+                        <i class="fas fa-list"></i> Audit Logs
                     </a>
                 </li>
                 <?php endif; ?>

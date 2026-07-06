@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="login-card">
     <div class="logo">
-        <i class="fas fa-user-plus"></i>
+        <img src ="assets/images/pharmatrustlogo.jpeg" alt="Pharmatrust Logo" style="height:80px;">
     </div>
     <h2>Employee Signup</h2>
     <p class="text-center text-muted">Create an assistant or pharmacist account.</p>
