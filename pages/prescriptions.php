@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 requireLogin();
-requirePharmacistOrAdmin();
 if (!isset($conn) || !$conn) {
     die('Database connection unavailable. Please check includes/config.php.');
 }
@@ -132,9 +131,11 @@ require_once __DIR__ . '/../includes/header.php';
 ========================= -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-prescription"></i> Prescriptions</h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPrescriptionModal">
-        <i class="fas fa-plus"></i> Add Prescription
-    </button>
+    <?php if (canEditPrescriptions()): ?>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPrescriptionModal">
+            <i class="fas fa-plus"></i> Add Prescription
+        </button>
+    <?php endif; ?>
 </div>
 
 <?php
@@ -163,7 +164,9 @@ if (isset($_SESSION['message'])) {
                         <th>Doctor</th>
                         <th>Expiry</th>
                         <th>Status</th>
+                        <?php if (canEditPrescriptions()): ?>
                         <th>Actions</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
 
@@ -195,6 +198,7 @@ if (isset($_SESSION['message'])) {
                             </span>
                         </td>
 
+                        <?php if (canEditPrescriptions()): ?>
                         <td>
                             <button class="btn btn-sm btn-info"
                                 onclick="editPrescription(<?= $row['prescription_id'] ?>)">
@@ -211,6 +215,7 @@ if (isset($_SESSION['message'])) {
                                 </button>
                             </form>
                         </td>
+                        <?php endif; ?>
 
                     </tr>
                 <?php endwhile; ?>
@@ -222,8 +227,9 @@ if (isset($_SESSION['message'])) {
     </div>
 </div>
 
+<?php if (canEditPrescriptions()): ?>
 <!-- =========================
-     ADD MODAL (UNCHANGED UI)
+    ADD MODAL (UNCHANGED UI)
 ========================= -->
 <div class="modal fade" id="addPrescriptionModal" tabindex="-1">
     <div class="modal-dialog">
@@ -462,5 +468,7 @@ document.addEventListener('click', function (event) {
         });
 });
 </script>
+
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -10,6 +10,9 @@ if (!isset($conn) || !$conn) {
    ADD SALE (SAFE TRANSACTION)
 ========================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_sale'])) {
+    if (!canEditSales()) {
+        denyAccess();
+    }
 
     $customer_id = !empty($_POST['customer_id']) ? intval($_POST['customer_id']) : null;
     $employee_id = intval($_SESSION['user_id']);
@@ -161,9 +164,11 @@ require_once __DIR__ . '/../includes/header.php';
 ========================= -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-shopping-cart"></i> Sales</h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSaleModal">
-        <i class="fas fa-plus"></i> New Sale
-    </button>
+    <?php if (canEditSales()): ?>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSaleModal">
+            <i class="fas fa-plus"></i> New Sale
+        </button>
+    <?php endif; ?>
 </div>
 
 <?php

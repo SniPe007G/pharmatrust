@@ -1,7 +1,6 @@
 ﻿<?php
 require_once __DIR__ . '/../includes/config.php';
 requireLogin();
-requirePharmacistOrAdmin();
 if (!isset($conn) || !$conn) {
     die('Database connection unavailable. Please check includes/config.php.');
 }
@@ -79,9 +78,11 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
     <div class="d-flex gap-2 flex-wrap">
         <input id="customerSearch" type="search" class="form-control search-input" data-table="customerTable" placeholder="Search customers..." style="min-width:240px;">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
-            <i class="fas fa-plus"></i> Add Customer
-        </button>
+        <?php if (canEditCustomers()): ?>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                <i class="fas fa-plus"></i> Add Customer
+            </button>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -104,7 +105,9 @@ if (isset($_SESSION['message'])) {
                         <th>Email</th>
                         <th>DOB</th>
                         <th>Registration Date</th>
+                        <?php if (canEditCustomers()): ?>
                         <th>Actions</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,6 +119,7 @@ if (isset($_SESSION['message'])) {
                             <td><?= htmlspecialchars($row['email']) ?></td>
                             <td><?= $row['dob'] ? date('M d, Y', strtotime($row['dob'])) : '' ?></td>
                             <td><?= $row['registration_date'] ? date('M d, Y', strtotime($row['registration_date'])) : '' ?></td>
+                            <?php if (canEditCustomers()): ?>
                             <td>
                                 <a href="<?= BASE_PATH ?>/pages/customer_details.php?id=<?= $row['customer_id'] ?>" class="btn btn-sm btn-secondary me-1">
                                     <i class="fas fa-eye"></i>
@@ -130,6 +134,7 @@ if (isset($_SESSION['message'])) {
                                     </button>
                                 </form>
                             </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
@@ -138,6 +143,7 @@ if (isset($_SESSION['message'])) {
     </div>
 </div>
 
+<?php if (canEditCustomers()): ?>
 <!-- ADD CUSTOMER MODAL -->
 <div class="modal fade" id="addCustomerModal" tabindex="-1">
     <div class="modal-dialog">
@@ -316,5 +322,7 @@ document.addEventListener('click', function (event) {
         });
 });
 </script>
+
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

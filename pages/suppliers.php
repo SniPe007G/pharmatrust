@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 requireLogin();
-requireAdmin();
 if (!isset($conn) || !$conn) {
     die('Database connection unavailable. Please check includes/config.php.');
 }
@@ -10,6 +9,10 @@ if (!isset($conn) || !$conn) {
    ADD SUPPLIER
 ========================================================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
+    if (!canEditSuppliers()) {
+        denyAccess();
+    }
+
     $name           = $_POST['name'] ?? '';
     $contact_person = $_POST['contact_person'] ?? '';
     $phone          = $_POST['phone'] ?? '';
@@ -40,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
    DELETE SUPPLIER
 ========================================================= */
 if (isset($_GET['delete'])) {
+    if (!canEditSuppliers()) {
+        denyAccess();
+    }
 
     $id = intval($_GET['delete']);
 
@@ -85,9 +91,11 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-truck"></i> Suppliers</h2>
 
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
-        <i class="fas fa-plus"></i> Add Supplier
-    </button>
+    <?php if (canEditSuppliers()): ?>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+            <i class="fas fa-plus"></i> Add Supplier
+        </button>
+    <?php endif; ?>
 </div>
 
 <?php
@@ -109,7 +117,9 @@ if (isset($_SESSION['message'])) {
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Address</th>
+                        <?php if (canEditSuppliers()): ?>
                         <th>Actions</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
 
@@ -123,6 +133,7 @@ if (isset($_SESSION['message'])) {
                         <td><?= $row['email'] ?? 'N/A'; ?></td>
                         <td><?= substr($row['address'] ?? 'N/A', 0, 30) . '...'; ?></td>
 
+                        <?php if (canEditSuppliers()): ?>
                         <td>
                             <button class="btn btn-sm btn-info"
                                     onclick="editSupplier(<?= $row['supplier_id']; ?>)">
@@ -135,6 +146,7 @@ if (isset($_SESSION['message'])) {
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endwhile; ?>
                 </tbody>
@@ -144,8 +156,9 @@ if (isset($_SESSION['message'])) {
     </div>
 </div>
 
+<?php if (canEditSuppliers()): ?>
 <!-- =========================================================
-     ADD SUPPLIER MODAL
+    ADD SUPPLIER MODAL
 ========================================================= -->
 <div class="modal fade" id="addSupplierModal" tabindex="-1">
     <div class="modal-dialog">
@@ -333,5 +346,7 @@ document.addEventListener('click', function (event) {
         });
 });
 </script>
+
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

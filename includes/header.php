@@ -75,7 +75,7 @@ if (!isset($basePath)) {
                     </a>
                 </li>
 
-                <?php if (isAdmin() || isPharmacist()): ?>
+                <?php if (isLoggedIn()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $basePath ?>/pages/customers.php">
                         <i class="fas fa-users"></i> Customers
@@ -88,7 +88,7 @@ if (!isset($basePath)) {
                 </li>
                 <?php endif; ?>
 
-                <?php if (isAdmin() || isSalesAssistant()): ?>
+                <?php if (isLoggedIn()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $basePath ?>/pages/sales.php">
                         <i class="fas fa-shopping-cart"></i> Sales
@@ -96,21 +96,21 @@ if (!isset($basePath)) {
                 </li>
                 <?php endif; ?>
 
-                <?php if (isAdmin() || isPharmacist()): ?>
+                <?php if (isLoggedIn()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $basePath ?>/pages/prescriptions.php">
                         <i class="fas fa-prescription"></i> Prescriptions
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if (isAdmin()): ?>
+                <?php if (isLoggedIn()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $basePath ?>/pages/suppliers.php">
                         <i class="fas fa-truck"></i> Suppliers
                     </a>
                 </li>
                 <?php endif; ?>
-                <?php if (isAdmin() || isPharmacist()): ?>
+                <?php if (isLoggedIn()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $basePath ?>/pages/consultations.php">
                         <i class="fas fa-stethoscope"></i> Consultations

@@ -175,7 +175,7 @@ function requirePharmacistOrAdmin()
 
 function requireSalesOrAdmin()
 {
-    if (!isAdmin() && !isSalesAssistant()) {
+    if (!isAdmin() && !isSalesAssistant() && !isPharmacist()) {
         denyAccess();
     }
 }

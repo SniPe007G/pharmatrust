@@ -1,7 +1,6 @@
 ﻿<?php
 require_once __DIR__ . '/../includes/config.php';
 requireLogin();
-requirePharmacistOrAdmin();
 if (!isset($conn) || !$conn) {
     die('Database connection unavailable. Please check includes/config.php.');
 }

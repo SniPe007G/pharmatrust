@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 requireLogin();
-requirePharmacistOrAdmin();
 if (!isset($conn) || !$conn) {
     die('Database connection unavailable. Please check includes/config.php.');
 }
@@ -128,9 +127,11 @@ require_once __DIR__ . '/../includes/header.php';
 ========================= -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-stethoscope"></i> Consultations</h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addConsultationModal">
-        <i class="fas fa-plus"></i> Add Consultation
-    </button>
+    <?php if (canEditConsultations()): ?>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addConsultationModal">
+            <i class="fas fa-plus"></i> Add Consultation
+        </button>
+    <?php endif; ?>
 </div>
 
 <?php
@@ -157,7 +158,9 @@ if (isset($_SESSION['message'])) {
                         <th>Date & Time</th>
                         <th>Duration</th>
                         <th>Notes</th>
+                        <?php if (canEditConsultations()): ?>
                         <th>Actions</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
 
@@ -178,6 +181,7 @@ if (isset($_SESSION['message'])) {
                             <?= htmlspecialchars(substr($row['notes'] ?? 'N/A', 0, 30)) ?>...
                         </td>
 
+                        <?php if (canEditConsultations()): ?>
                         <td>
                             <button class="btn btn-sm btn-info"
                                 onclick="viewConsultation(<?= $row['consultation_id'] ?>)">
@@ -194,6 +198,7 @@ if (isset($_SESSION['message'])) {
                                 </button>
                             </form>
                         </td>
+                        <?php endif; ?>
 
                     </tr>
                 <?php endwhile; ?>
@@ -205,8 +210,9 @@ if (isset($_SESSION['message'])) {
     </div>
 </div>
 
+<?php if (canEditConsultations()): ?>
 <!-- =========================
-     ADD MODAL (UNCHANGED UI)
+    ADD MODAL (UNCHANGED UI)
 ========================= -->
 <div class="modal fade" id="addConsultationModal" tabindex="-1">
     <div class="modal-dialog">
@@ -274,5 +280,7 @@ function viewConsultation(id) {
     alert('View consultation ' + id + ' - not implemented yet');
 }
 </script>
+
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
